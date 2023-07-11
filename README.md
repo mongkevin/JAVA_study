@@ -1,4 +1,4 @@
-# JAVA_study
+# JAVA_Study
 Study JAVA basic elements
 
 <hr>
