@@ -1,7 +1,11 @@
 # JAVA_Study
 Study JAVA basic elements
+자바를 시작하며 공부한 내용들이다. 기초를 14 프로젝트로 정리하였다.
+
 
 <hr>
+<mark>01_My_First_Project</mark>
+
 Method : 기능을 의미한다.<br>
 하나의 클래스에 여러개의 메소드가 존재 가능하다.<br>
 메소드의 이름은 중복이 가능하지만 특정 조건을 만족하여야한다.<br>
@@ -12,3 +16,14 @@ Method : 기능을 의미한다.<br>
 다른 메소드에서 호출을 해줘야만 실행될 수 있다.<br>
 
 <hr>
+<mark>02_Variable</mark>
+
+
+<hr>
+<mark>03_Operator</mark>
+
+<hr>
+<mark>04_Control</mark>
+
+<hr>
+<mark>05_Array</mark>
