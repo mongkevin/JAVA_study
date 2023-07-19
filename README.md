@@ -1,6 +1,6 @@
 # JAVA_Study
-Study JAVA basic elements
-자바를 시작하며 공부한 내용들이다. 기초를 14개 프로젝트로 정리하였다.
+Study JAVA basic elements  
+자바를 시작하며 공부한 내용들이다. 배운 내용을 총 14개 프로젝트로 정리하였다.
 
 
 ---
@@ -1243,7 +1243,7 @@ public void fileRead() {
 시스템적으로 이야기하자면 JVM(Java Virtual Machine 이하 JVM)의 메모리에  
 상주(힙 또는 스택)되어 있는 객체 데이터를 바이트 형태로 변환하는 기술과  
 직렬화된 바이트 형태의 데이터를 객체로 변환해서 JVM으로 상주시키는 형태를 같이 이야기한다.  
-[출처](https://techblog.woowahan.com/2550/)
+~~출처: [우아한기술블로그](https://techblog.woowahan.com/2550/)~~
 
 ```java
 public class Phone implements Serializable{
@@ -1253,11 +1253,389 @@ public class Phone implements Serializable{
 ---
 ## 13_Collection
 
+### 컬렉션(Collection)
+![컬렉션](./image/collection.PNG)   
+자료구조가 내장되어 있는 클래스  
+자바에서 제공하는 "자료구조"를 담당하는 프레임워크이다.  
+	-자료구조: 데이터들을 효율적으로 다룰때 필요한 개념  
+	-프레임 워크: 효울적인 기능들이 이미 정의되어있는 툴(도구)  
 
+데이터들이 새롭게 추가되거나 삭제되거나 수정이 되는 기능들이 정의되어 있는 도구라고 볼 수있다.  
+다량의 데이터들을 관리하고자 할때 배열을 사용할 수 있지만 배열의 단점들이 있기 때문에 불편하여  
+그 단점들을 보완한 것이 컬렉션  
+
+배열과 컬렉션의 차이점  
+-배열의 단점  
+1. 한 타입의 데이터들만 저장 가능하다.  
+2. 배열을 쓰고자 할때 먼저 크기를 지정해야하며 크기 변경을 할 수 없다.  
+	-때문에 새로운 값을 추가하거나 삭제하여 크기가 변경이 된다면 기존 내용을 복사하는 코드를 작성하여 새 배열을 할당해야 한다.  
+
+컬렉션의 장점  
+1. 기본적으로 여러 타입의 데이터들을 저장할 수 있다. 같은 타입도 묶어서 저장할 수 있따(제네릭타입)  
+2. 크기에 제약이 없음  
+	-크기 지정을 하지 않아도 되고 크기를 벗어난 입력을 하여도 자동으로 크기변경을 해준다.  
+3. 중간에 값을 추가하거나 삭제하는 경우 값을 앞으로 또는 뒤로 밀어주는 코드가 내장되어있다.  
+ 
+방대한 데이터들을 단지 담아두고 조회만 할 목적이라면 배열을 사용하는 것이 좋지만  
+만약 추가 삭제 수정이 빈번히 일어나는 경우라면 컬렉션을 사용하는 것이 더 효율적이다.  
+
+컬렉션의 종류(3가지 배열)  
+List: 담고자 하는 값(value)만 저장하고 값 저장시 순서를 유지한다(index개념이 있음) /중복가능   
+ 		ex)ArrayList, Vector, LinkedList 등등  
+Set: 담고자 하는 값(value)만 저장 가능하고 저장시 순서를 유지 하지 않는다.(index개념 없음) /중복불가  
+ 		ex) HashSet, LinkedHashSet, TreeSet 등등...  
+Map: 키(Key) + 값(value)의 형태로 이루어져있고 값 저장시 순서를 유지하지 않는다. (index 개념 없음)  
+ 				중복키는 불가능 중복값은 가능하다.  
+ 		ex) HashMap, HashTable, TreeMap, Properties 등등...  
+
+### ArrayList
+[표현법]
+```java
+ArrayList 객체이름 = new ArrayList(); - 크기 지정 안하는 생성자(기본 크기10)
+ArrayList 객체이름 = new ArrayList(크기); - 크기 지정 생성자 (크기를 벗어나는 입력이 생기면 크기가 늘어난다)
+
+//데이터 추가 메소드 add()
+list.add("안녕하세요");
+//크기보다 더 많이 넣어보기 (중복가능)
+//크기지정한 크기보다 더 많이 데이터를 넣어도 자동으로 증가시켜서 오류가 발생하지 않는다.
+//순차적으로 순서를 유지하며 등록이 되어있고 index도 활용 가능하다.
+
+//set(int index. E e): 리스트에 index위치에 e로 변경하는 작업
+list.set(4, new Music("사랑비","김태우"));
+
+//remove(int index): 리스트에 index위치를 삭제하는 작업메소드
+list.remove(4);
+
+//인덱스 개념이 있으니 반복문을 활용하자
+for(int i=0; i<list.size(); i++) {
+	System.out.println(list.get(i));
+}
+
+//만약 순차적으로 처음부터 끝까지 접근하려한다면
+//향상된 for문을 사용(foreach)문
+		
+//모든 자료형을 받아줄수 있는 Object로 뽑아보기
+for(Object o: list) {
+	System.out.println(o);
+}
+
+//첫번째 인덱스부터 두번째 인덱스까지 값을 추출해서 리스트로 반환해주는 메소드
+		
+List sub = list.subList(2, 5); //index2-1까지 반환하는 메소드
+
+//리스트 더하기
+//addAll(collection c): 해당 리스트에 다른 컬렉션에 있는 데이터를 통째로 추가하는 메소드		
+list.addAll(sub);
+
+//전부 지우는 메소드
+//clear()
+list.clear();
+
+//비어있는지 확인하는 메소드
+//isEmpty();
+System.out.println(list.isEmpty()); 
+```
+
+### 제네릭(Generic) <E>
+컬렉션 안에서 다룰 타입들을 미리 지정해주는 역할 -> 명시적으로<String>, <Integer>,....  
+객체의 형변환을 사용할 필요가 없어진다.  
+-내가 사용하고자 하는 타입으로 지정하는 것.  
+
+별도의 제네릭타입을 지정하지 않으면 Object타입으로 된다.  
+
+제네릭을 사용하는 이유  
+1. 저장할 타입의 제한을 두기 위함.   
+2. 형변환 또는 자료형 비교를 없애기 위함  
+
+[표현법]  
+```java
+ArrayList<E> list = new ArrayList<>();
+//양쪽에 제네릭 타입을 넣어주는게 기본
+//하지만 왼쪽에 선언부에서 타입추론이 일어나기 때문에 오른쪽은 생략가능하다.
+```
+**제네릭 타입에는 참조자료형만 올 수 있다. 기본바료형을 사용하려면 Wrapper클래스를 활용해야한다.**  
+
+### HashSet
+값만 저장, index개념은 없다, 중복불가
+list는 순서유지o 중복o   
+[표현법]  
+```java
+HashSet 객체명 = new HashSet();
+
+//문자열 제네릭설정
+HashSet<String> set = new HashSet<>();
+
+//set의 크기 -size()
+System.out.println("크기: "+set.size());
+
+//값 삭제 - remove()- index개념이 없기 때문에 삭제할 값을 입력
+boolean isTrue = set.remove("습니다");
+System.out.println(isTrue+" "+set);
+
+//clear();
+set.clear(); //데이터 전체 삭제 메소드
+System.out.println(set.isEmpty());
+```
+
+**저장순서 유지x,중복제거x**  
+why? - 동일 객체로 판단되지 않아서(주소값이 다르니깐)  
+실질적으로 객체에 담긴 값을 비교해서 동일 객체라고 판단 시키고 싶다.  
+HashSet은 값이 추가될때마다 equals메소드와 hashCode를 비교하여 둘다 결과가 true면  
+동일 객체라고 판단한다.  
+- equals(): 현재 객체의 주소값을 비교하여 결과 반환  
+- hashCode(): 현재 객체의 주소값을 10진수로 변환해서 보여주는 형태  
+		
+객체 내부 값으로 같은지 아닌지를 판단하기 위해 equals와 hasCode를 오버라이딩해야한다.  
+- equals(): 각 필드의 값이 모두 일치하면 true  
+- hashCode(): 세 필드값을 하나로 합치고 해쉬화하여 반환  
+
+### equals와 hashCode 메소드는 Object클래스의 메소드  
+오버라이딩해서 사용할 것   
+각 필드들이 전부 일치하는지 확인하는 작업을 통해 해당 객체들이 같은 객체인지 확인하기  
+문자열.equals("비교문자열");  
+
+### Iterator(반복자) -> HashSet 클래스에서 제공
+```java
+Iterator<Student> it  = hs.iterator();
+
+//StringTokenizer와 흡사하다.
+while(it.hasNext()) { //반복자에 남아있는 대상이 있는지? 있는면 true\없으면 false
+	System.out.println(it.next());
+}
+```
+### HashMap
+[표현법] 
+```java
+HashMap<자료형, 자료형> 객체명 = new HashMap<>();
+
+HashMap<String, String> hm = new HashMap<>();
+hm.put("최철수","010-9847-3029");		
+hm.put("김이름","010-2829-2029");
+//키값은 중복 불가능, 벨류값은 중복 가능, 순서 유지하지 않음
+//기존의 key값에 다시 대입하면 value값이 덮어진다.
+//여기서 key는 식별자의 역할을 가진다. key로 value를 찾는 형태
+
+//replace(K key, V value): 해당 키값을 찾아서 value값을 바꿔주는 메소드
+snacks.replace("눈을감자",new Snack("콘소메맛",100));
+//만약 존재하지 않은 키값을 입력한다면? - 추가되지 않는다
+snacks.replace("눈을뜨자",new Snack("아주매운맛",1000));
+
+//remove(Object key): 해당 키값을 찾아서 키+벨류 세트로 지워주는 메소드
+snacks.remove("양파링");
+```
+**해시맵에 있는 데이터에 모두 순차적으로 접근하고자 한다면?**
+```java
+//Map계열을 Set계열로 바꿔서 - Iterator를 사용
+		
+//1.keySet() 이용하기
+//-HashMap에서 제공하는 메소드로 Set에 key값만 담아준다.
+//반환형은 Set
+		
+//1단계) map에 있는 key들만 set으로 변경시키기
+Set<String> keySet = snacks.keySet();
+		
+//2단계) 1단계에서 만들어진 set을 iterator로 만들기 
+Iterator<String> it = keySet.iterator();
+		
+//3단계) 만들어진 Iterator 순차적으로 접근하기
+while(it.hasNext()) {//keySet에는 Map에 있던 키들만 모아놨기 때문에 해당 키로 get메소드를 사용하면 value를 얻을수 있다.
+	String key = it.next(); //키값
+	Snack s = snacks.get(key); //순차적으로 접근하여 얻은 키값으로 value값 조회하기		
+	System.out.println("key: "+ key + " value: "+ s);
+}
+
+//2.EntrySet() 메소드 이용하는 법
+		
+//1)Map에 있는 Key() + Value세트를 Entry라고 하는 형식으로 Set에 담아주기
+//Entry<> 라고하는 제네릭타입을 이용하는 방법
+Set<Entry<String,Snack>> entrySet = snacks.entrySet();
+		
+//2) 향상된 for문으로
+//for(Entry e: entrySet) {
+//	System.out.println(e.getKey()+" "+e.getValue());
+//}
+		
+//Iterator로 변환하기
+Iterator<Entry<String,Snack>> it2 = entrySet.iterator();
+		
+//반복문
+while(it2.hasNext()) {
+	System.out.println(it2.next());
+}
+		
+/*
+* Map의 특성상 순차적으로 접근할 직접적인 방법이 없기 때문에
+* -Map계열을 Set계열로 변경하여 접근한다.
+* -KeySet()과 entrySet()을 이용하면 된다. 
+*/
+```
+**컬렉션 정렬 방법**
+Collections.sort() 메소드
+체같은 경우에는 어떠한 기준으로 정렬으르 해야하는지 알 수 없기 때문에 오류가 발생한다. 
+Collections.sort() 메소드의 경우 내부적으로 compareTo()메소드가 샐행이되어  
+정렬기준을 설정한다.   
+해당 클래스에 implements Comparable<>를 추가해준다.  
+아래 메소드를 추가하여 this. .compareTo(o. )  
+
+compareTo 메소드를 오버라이딩하면 기본 정렬기준이 정해지는 것  
+만약 그때그때 정렬 기준을 다르게 하고 싶다면?  
+Comparator를 구현하여 compare()메소드에 기준을 잡아준다.  
+```java
+Collections.sort(ml,new Comparator<String>()){
+@Override
+Public int compare(String s1, String s2)
+	return s1.compareTo(s2); //반대면 내림차순
+}
+```
+
+제목 정렬 만약 제목이 같다면?  
+```java
+if (o1.getTitle().equals(o2.getTitle())){
+	return o1.getSinger().compareTo(o2.getSinger());
+	//return o1.getTitle.compareTo(o2.getTitle());
+}
+```
+		
+익명객체(익명클래스) 생성과 동시에 정의하여 사용
+바로 밑에 오버라이딩된 메소드를 써준다.
+
+정렬 기준을 잡아줄 메소드를 사용할 수 있도록 정렬 구현하기 Comparable<정렬하고자하는 vo>
+```java
+public class Dog implements Comparable<Dog>{
+	@Override
+	public int compareTo(Dog o) {
+		// 기본 정렬 기준 잡기
+		// 현재 객체 제목과 다른 객체 제목을 비교하기
+		return this.name.compareTo(o.name);
+	}
+}
+```
+### Properties: Map계열 -> key + value 세트로 저장된다
+여기서 Map과 다른 특이점은 모두 String 자료형으로 다룬다.  
+[표현법]   
+```java
+Properties<String,String> prop = new Properties<>();
+```
+Map 계열이기 때문에 키+벨류로 이루어져있고
+굳이 String이 아니여도 put메소드를 통해 잘 저장된다.
+
+하지만 보통 properties는 파일 입출력을 위해 사용하기 때문에
+tring, String 자료형으로 제네릭을 설정하여 사용한다.
+
+properties는 put대신 setProperty()메소드를 사용한다.
+```java
+Properties prop2 = new Properties();
+prop2.setProperty("List", "ArrayList");
+```
+
+**파일 출력을 위한 메소드 store(OutputStream os, String commets)**  
+
+```java
+Properties inputProp = new Properties();
+
+try {
+	//출력
+	prop2.store(new FileOutputStream("test.properties"),"Properties Test");
+		
+	//입력 load(intputStream): 파일을 읽어오는 메소드
+	inputProp.load(new FileInputStream("test.properties"));
+			
+	System.out.println("읽어온: "+ inputProp);
+} catch (FileNotFoundException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+} catch (IOException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+```
+
+### .xml
+다양한 프로그래밍 언어간에 호환성이 좋다.
+인터넷 웹페이지를 만드는 HTML을 획기적으로 개선하여 만든 언어이다.  
+홈페이지 구축기능, 검색기능 등이 향상되었고, 웹 페이지의 추가와 작성이 편리해졌다. 
+
+properties로 xml파일 만들고 입력하기
+```java
+Properties prop = new Properties();
+		
+prop.setProperty("List", "ArrayList");
+prop.setProperty("set", "HashSet");
+		
+//키값으로 벨류값 뽑기: getProperty(키값);
+System.out.println(prop.getProperty("List"));
+		
+//읽어올 properties 준비
+Properties inputProp = new Properties();
+//XML로 저장하기
+try {
+	//xml파일로 출력하는 메소드 storeToXML(outputstream, comments);
+	prop.storeToXML(new FileOutputStream("test.xml"), "XML TEST");
+	System.out.println("읽기전: " + inputProp);
+	//xml파일 읽는 메소드
+	inputProp.loadFromXML(new FileInputStream("test.xml"));
+	System.out.println("읽기 후: "+ inputProp);
+} catch (FileNotFoundException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+} catch (IOException e) {
+	// TODO Auto-generated catch block
+	e.printStackTrace();
+}
+```
+
+### mvc 패턴의 c: controller - 사용자의 요청을 받아 처리하는 클래스
+### mvc 패턴의 v: view 사용자가 보게될 화면
+### mvc 패턴의 m: model 데이터 클래스
+~~더 자세한 이야기는 내 블로그에서: [말만 하는 개발자](https://mongkevin.tistory.com/)~~  
 
 ---
 ## 14_Network
 
+### 네트워크
+여러개의 컴퓨터가 그물처럼 연결되어 있는 것.  
+여러개의 통신기기와 같은 컴퓨터들을 연결하여 데이터를 손쉽게 주고 받을 수 있다.  
 
+네트워크의 목적  
+여러개의 통신기기와 같은 컴퓨터들을 연결해서 데이터를 손쉽게 주고받기 위함.  
+ 
+java.net 패키지의 클래스들을 통해 지원한다.  
 
+서버와 클라이언트  
+-서버: 서비스를 제공하는 컴퓨터 또는 프로그램  
+-클라이언트: 서비스를 제공받는 서비스를 이용하는 사용자 또는 프로그램 또는 컴퓨터   
 
+-서버의 역할: 서비스를 제공할 뿐만 아니라 클라이언트의 연결 요청을 수락하고 응답한다.  
+
+### 네트워크의 주소체계
+-IP주소: Internet Protocol  
+네트워크 상에서 컴퓨터를 식별하는 번호  
+네트워크 상에서 통신기기들이 서로 인식하고 통신하기 위해 사용하는 고유한 주소 - 중복되면 충돌발생  
+-port번호: 같은 컴퓨터 내에서 각각의 프로그램을 식별하고 있는 고유 번호 - 중복되면 충돌  
+-MAC 주소: 컴퓨터간 데이터를 전송하기 위해 있는 컴퓨터의 물리적 주소- 절대 변하지 않는 기계의 고유번호  
+
+-ip주소와 port번호: 클라이언트가 서버에 요청 하려면 ip주소와 Port번호를 알아야한다.  
+-소켓: 프로세스간 통신에 사용되는 양쪽 끝 단  
+
+TCP: 데이터 전송 속도가 느리지만 정확하고 안정적으로 전달할 수 이쓴ㄴ 전달 방식 체계(연결지향적)  
+UDP: 데이터 전송 속도가 빠르지만 신뢰성이 없는 데이터를 전송하는 전달 방식 체계(비연결지향적)  
+프로토콜: 컴퓨터간의 정보를 주고 받을때 통신방법에 대한 약속(접속, 전달방법, 데이터형태, 검증방법 등등)   
+
+**클라이언트 연결 순서**
+1. 서버의 IP주소와 port번호를 매개변수로 하여 클라이언트용 소켓 객체 생성(해당 서버로 연결을 요청하겠다)  
+2. I/O 스트림 생성  
+3. 보조스트림으로 성능개선  
+4. 읽고쓰기  
+5. 통신 종료 - 자원반납  
+
+**서버 연결 순서**
+1. 서버의 소켓 생성
+2. 클라이언트의 접속 요청 대기
+3. 요청이 오면 수락
+4. 클라이언트의 정보를 저장
+5. 해당 정보로 OutputStream 객체생성
+6. 해당 정보로 InputStream 객체생성
+7. 연결된 스트림을 통해 읽고 쓰는 작업을 해보기
+8. 연결종료
+
+~~더 자세한 이야기는 내 블로그에서: [말만 하는 개발자](https://mongkevin.tistory.com/)~~  
