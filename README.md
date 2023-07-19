@@ -1253,9 +1253,9 @@ public class Phone implements Serializable{
 ---
 ## 13_Collection
 
-### 컬렉션(Collection)
-![컬렉션](./image/collection.PNG)   
-자료구조가 내장되어 있는 클래스  
+### 컬렉션(Collection)  
+![컬렉션](./image/collection.PNG)     
+자료구조가 내장되어 있는 클래스    
 자바에서 제공하는 "자료구조"를 담당하는 프레임워크이다.  
 	-자료구조: 데이터들을 효율적으로 다룰때 필요한 개념  
 	-프레임 워크: 효울적인 기능들이 이미 정의되어있는 툴(도구)  
@@ -1265,7 +1265,7 @@ public class Phone implements Serializable{
 그 단점들을 보완한 것이 컬렉션  
 
 배열과 컬렉션의 차이점  
--배열의 단점  
+-배열의 단점   
 1. 한 타입의 데이터들만 저장 가능하다.  
 2. 배열을 쓰고자 할때 먼저 크기를 지정해야하며 크기 변경을 할 수 없다.  
 	-때문에 새로운 값을 추가하거나 삭제하여 크기가 변경이 된다면 기존 내용을 복사하는 코드를 작성하여 새 배열을 할당해야 한다.  
@@ -1336,7 +1336,7 @@ list.clear();
 System.out.println(list.isEmpty()); 
 ```
 
-### 제네릭(Generic) <E>
+### 제네릭(Generic) <E>  
 컬렉션 안에서 다룰 타입들을 미리 지정해주는 역할 -> 명시적으로<String>, <Integer>,....  
 객체의 형변환을 사용할 필요가 없어진다.  
 -내가 사용하고자 하는 타입으로 지정하는 것.  
@@ -1356,7 +1356,7 @@ ArrayList<E> list = new ArrayList<>();
 **제네릭 타입에는 참조자료형만 올 수 있다. 기본바료형을 사용하려면 Wrapper클래스를 활용해야한다.**  
 
 ### HashSet
-값만 저장, index개념은 없다, 중복불가
+값만 저장, index개념은 없다, 중복불가  
 list는 순서유지o 중복o   
 [표현법]  
 ```java
@@ -1470,8 +1470,8 @@ while(it2.hasNext()) {
 */
 ```
 **컬렉션 정렬 방법**
-Collections.sort() 메소드
-체같은 경우에는 어떠한 기준으로 정렬으르 해야하는지 알 수 없기 때문에 오류가 발생한다. 
+Collections.sort() 메소드  
+체같은 경우에는 어떠한 기준으로 정렬으르 해야하는지 알 수 없기 때문에 오류가 발생한다.   
 Collections.sort() 메소드의 경우 내부적으로 compareTo()메소드가 샐행이되어  
 정렬기준을 설정한다.   
 해당 클래스에 implements Comparable<>를 추가해준다.  
